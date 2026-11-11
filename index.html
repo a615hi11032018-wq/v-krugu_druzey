@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <link rel="icon" href="./52f2c4ca-fbf7-43cb-a136-3340316d3a5b.jpg"
-    type="image/jpeg">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08172e">
@@ -80,13 +78,6 @@
   position:absolute;top:0;left:var(--x);font-size:var(--size);line-height:1;
   color:var(--tone);opacity:0;text-shadow:0 0 9px #ffdb8ab3;
 }
-.motion-toggle{
-  position:absolute;z-index:4;right:30px;bottom:26px;padding:5px 9px;
-  color:#ffe2a2;background:#0a1931e8;border:1px solid #d6aa5b79;
-  border-radius:3px;font:600 11px/1.25 var(--sans);cursor:pointer;
-}
-.motion-toggle:focus-visible{outline:2px solid #ffe2a2;outline-offset:3px}
-.motion-toggle:hover{background:#253b59}
 @keyframes gold-sheen{
   0%,8%{background-position:100% center,center}
   36%,100%{background-position:0% center,center}
@@ -110,14 +101,9 @@
   .winter-fx span{animation:snow-drift var(--duration) var(--delay) linear infinite}
   .caption{animation:gold-sheen 4.8s .48s ease-in-out infinite}
   .seal::after{animation:gold-halo 3s ease-in-out infinite alternate}
-  .motion-paused :is(.winter-fx span,.caption),
-  .motion-paused .gold-number-art::after,.motion-paused .seal::after{animation-play-state:paused}
 }
 @media(prefers-reduced-motion:reduce){
-  .motion-toggle,.winter-fx{display:none}
-}
-@media(max-width:680px){
-  .motion-toggle{right:18px;bottom:17px}
+  .winter-fx{display:none}
 }
 
 .hero-intro{
@@ -297,7 +283,6 @@
 <use href="#gold-star" x="312" y="204" opacity=".76"/><use href="#gold-star" x="289" y="508" opacity=".85"/>
 </svg>
 <div class="winter-fx" aria-hidden="true"></div>
-<button class="motion-toggle" type="button" hidden>Пауза анимации</button>
 <span class="corner tl" aria-hidden="true">✧</span><span class="corner tr" aria-hidden="true">✧</span><span class="corner bl" aria-hidden="true">✧</span><span class="corner br" aria-hidden="true">✧</span>
 <div class="shell hero-intro">
 <h1 class="jubilee">
@@ -338,7 +323,6 @@
 <script>
 const hero = document.querySelector('.hero');
 const snow = hero.querySelector('.winter-fx');
-const motion = hero.querySelector('.motion-toggle');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const goldArt = hero.querySelector('.gold-number-art');
@@ -462,13 +446,6 @@ function createSnow() {
     snow.append(flake);
   }
 }
-
-motion.hidden = false;
-motion.addEventListener('click', () => {
-  const paused = hero.classList.toggle('motion-paused');
-  if (paused) finishGoldIntro();
-  motion.textContent = paused ? 'Включить анимацию' : 'Пауза анимации';
-});
 
 createSnow();
 reducedMotion.addEventListener('change', createSnow);
